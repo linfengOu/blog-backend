@@ -2,8 +2,7 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"github/linfengOu/blog-backend/config"
-	"net/http"
+	"github/linfengOu/write-backend/config"
 )
 
 type Server struct {
@@ -15,16 +14,12 @@ func New() *Server {
 	s.Router = gin.Default()
 
 	// set router mapping
-	s.Router.GET("/", func(context *gin.Context) {
-		context.JSON(http.StatusOK, gin.H{
-			"message": "Hello world",
-		})
-	})
+	mapRouter(s.Router)
 
 	return &s
 }
 
 func (s *Server) Start() {
 	// Start engine
-	s.Router.Run(config.Config.HTTPServer.Port)
+	s.Router.Run(config.Get(config.ServicePort))
 }
